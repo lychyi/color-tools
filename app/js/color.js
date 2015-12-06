@@ -14,29 +14,50 @@ Math.round = (function(){
 // Simple class for handling sRGB colors
 (function(){
 
-var _ = self.Color = function(rgba) {
-	if (rgba === 'transparent') {
-		rgba = [0,0,0,0];
+var _ = self.Color = function(colorVal) {
+	if (colorVal === 'transparent') {
+		colorVal = [0,0,0,0];
 	}
-	else if (typeof rgba === 'string') {
-		var rgbaString = rgba;
-		rgba = rgbaString.match(/rgba?\(([\d.]+), ([\d.]+), ([\d.]+)(?:, ([\d.]+))?\)/);
-		
-		if (rgba) {
-			rgba.shift();
+	else if (typeof colorVal === 'string') {
+		var colorString = colorVal;
+
+		// For the case of RGBA passed in
+		colorVal = colorString.match(/rgba?\(([\d.]+), ([\d.]+), ([\d.]+)(?:, ([\d.]+))?\)/);
+		isHex = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(colorString);
+
+		if (colorVal) {
+			colorVal.shift();
+		} else if (isHex) {
+			colorVal = hexToRgb(colorString);
+		}	else {
+			throw new Error('Invalid string: ' + colorString);
 		}
-		else {
-			throw new Error('Invalid string: ' + rgbaString);
+
+		// For the case of HEX passed in
+		function hexToRgb(hex) {
+		    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+		    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+		    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+		        return r + r + g + g + b + b;
+		    });
+
+		    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+		    return result ? [
+		        parseInt(result[1], 16),
+		        parseInt(result[2], 16),
+		        parseInt(result[3], 16), 
+		        1
+		    ] : null;
 		}
 	}
-	
-	if (rgba[3] === undefined) {
-		rgba[3] = 1;	
+
+	if (colorVal[3] === undefined) {
+		colorVal[3] = 1;	
 	}
 	
-	rgba = rgba.map(function (a) { return Math.round(a, 3) });
-	
-	this.rgba = rgba;
+	colorVal = colorVal.map(function (a) { return Math.round(a, 3) });
+
+	this.rgba = colorVal;
 }
 
 _.prototype = {

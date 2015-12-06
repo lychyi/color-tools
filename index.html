@@ -4,21 +4,39 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>Color Tools</title>
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="app/css/site.css">
+	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
 	<div ng-app="colorApp" ng-controller="mainController as main" class="container">
 		<div class="row">
 			<div class="col-xs-12">
-				Hello Worlds
-				<button class="btn btn-info">this is a button</button>
-				More hellow
-				colors!
+				<h1>Illumina Colors</h1>
+				<div ng-repeat="(name, color) in main.colors.ilmn">
+					<div clipboard text="color.hex|uppercase">
+						<div color-block hex="color.hex" name="name" lum="color.luminance" ng-click="main.setShades(color.shades, name)" ng-class="{active: main.activeColor == name}"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div ng-if="main.shades" class="row animate-fade">
+			<div class="col-xs-12">
+				<h1>Shades</h1>
+				<div ng-repeat="(name, color) in main.shades">
+					<div clipboard text="color.hex|uppercase">
+						<div color-block hex="color.hex" name="name" lum="color.luminance"></div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 	<script src="app/js/color.js"></script>
+	<script src="node_modules/chroma-js/chroma.min.js"></script>
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+	<script src="bower_components/angular-clipboard/angular-clipboard.js"></script>
 	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 	<!-- Angular App -->
