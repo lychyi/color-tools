@@ -3,7 +3,7 @@
 
 	var app = angular.module('colorApp');
 
-	app.constant('DATA_DIR', '/app/data/');
+	app.constant('DATA_DIR', '../app/data/');
 
 	app.config(config);
 

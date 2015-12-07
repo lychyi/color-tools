@@ -191,7 +191,7 @@ _.WHITE = new _([255,255,255]);
 
 	var app = angular.module('colorApp');
 
-	app.constant('DATA_DIR', '/app/data/');
+	app.constant('DATA_DIR', '../app/data/');
 
 	app.config(config);
 
