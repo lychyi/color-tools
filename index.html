@@ -12,10 +12,10 @@
 	<div ng-app="colorApp" ng-controller="mainController as main" class="container-fluid app-container">
 		<div class="row title-row" style="border-bottom: 1px solid #eee">
 			<div class="col-xs-3">
-				<h4>Colors</h4>
+				<h4>Colors <small style="float: right; cursor: pointer" ng-if='main.leftBgHex != "#ffffff"'><a ng-click="main.resetLeftBg()">Clear <i class="fa fa-minus-circle"></i></a></small></h4>
 			</div>
 			<div class="col-xs-9">
-				<h4 ng-if="main.shades">Shades for {{main.activeColor}} ({{main.activeHex}}) <small>Contrast <i ng-show="main.passed" class="fa fa-check text-success"></i></small></h4>
+				<h4 ng-if="main.shades">Shades for {{main.activeColor}} ({{main.activeHex}}) <small>Contrast <i ng-show="main.passed" class="fa fa-check text-success"></i><i ng-show="!main.passed" class="fa fa-close text-danger"></i></small><small style="float: right; cursor: pointer;" ng-if='main.rightBgHex != "#ffffff"'><a ng-click="main.resetRightBg()">Clear <i class="fa fa-minus-circle"></i></a></small></h4>
 			</div>
 		</div>
 		<div class="row content-row">			
