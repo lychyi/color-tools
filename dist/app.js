@@ -239,13 +239,41 @@ _.WHITE = new _([255,255,255]);
 			scope: {
 				hex: "=", 
 				name: "=", 
-				lum: "="
+				lum: "=", 
+				contrast: "=", 
+				showName: "=", 
+				showHex: "=", 
+				showLum: "=", 
+				showContrast: "=", 
+				setLeftBg: "&", 
+				setRightBg: "&"
 			}, 
+			transclude: true, 
 			link: link,
-			template: '<i class="color-selected text-success fa fa-check"></i><span class="color-text">{{name}} - {{lum | number: 4}} - {{hex | uppercase}}</span>'
+			template: '<i class="color-selected fa fa-check text-success"></i>' + 
+								'<div ng-show="showName" class="{{labelClass}} color-label color-name"><b>Name:</b> {{name}}</div>' +
+								'<div ng-show="showHex" class="{{labelClass}} color-label color-hex"><b>Hex:</b> {{hex | uppercase}}</div>' +
+								'<div ng-show="showLum" class="{{labelClass}} color-label color-lum"><b>Luminance:</b> {{lum | number: 4}}</div>' +
+								'<div ng-show="showContrast" class="{{labelClass}} color-label color-contrast"><b>Contrast:</b> {{contrast | number: 1}}</div>' + 
+								'<div class="{{labelClass}} toolbar">' + 
+									'<i clipboard text="hex|uppercase" class="icon fa fa-clipboard fa-lg" title="Copy hex to clipboard."></i>' +
+									'<span ng-click="setLeftBg({hex:hex})" class="icon fa-stack fa-lg" style="font-size: 0.8em;" title="Set this color to left background.">' + 
+									  '<i class="fa fa-columns fa-stack-2x"></i>' + 
+									  '<i class="fa fa-long-arrow-left fa-stack-1x"></i>' + 
+									'</span>' + 
+									'<span ng-click="setRightBg({hex:hex})" class="icon fa-stack fa-lg" style="font-size: 0.8em;" title="Set this color to right background.">' + 
+									  '<i class="fa fa-columns fa-stack-2x"></i>' + 
+									  '<i class="fa fa-long-arrow-right fa-stack-1x"></i>' + 
+									'</span>' + 
+								'</div>'
 		};
 
 		function link (scope, element, attrs) {
+			if (scope.lum > 0.18) {
+				scope.labelClass = 'black';
+			} else {
+				scope.labelClass = 'white';
+			}
 			element.addClass('color-block');
 			element.css("background-color", scope.hex);
 			
@@ -275,10 +303,15 @@ _.WHITE = new _([255,255,255]);
 			};
 
 		vm.colors = [];
-
 		vm.setShades = setShades;
-
 		vm.shades;
+		vm.setLeftBg = setLeftBg;
+		vm.setRightBg = setRightBg;
+		vm.resetLeftBg = resetLeftBg;
+		vm.resetRightBg = resetRightBg;
+
+		vm.leftBgHex = "#ffffff";
+		vm.rightBgHex = "#ffffff";
 
 		activate();
 
@@ -297,21 +330,26 @@ _.WHITE = new _([255,255,255]);
 					vm.colors.ilmn[key].luminance = color.luminance();
 
 					// Calculate shades
-					vm.colors.ilmn[key].shades = createShades(vm.colors.ilmn[key].hex);
+					vm.colors.ilmn[key].shades = _createShades(vm.colors.ilmn[key].hex);
+
+					console.log(vm.colors.ilmn[key].shades);
 				}
 			});
 		}
 
-		function setShades(obj, name) {
-			vm.shades = obj;
+		function setShades(color, name) {
+			console.log(color);
+			vm.shades = color.shades;
 			vm.activeColor = name;
+			vm.activeHex = color.hex;
+			vm.passed = _passedContrast(vm.shades, 4.5);
 
 			console.log('setting shades');
 		}
 
 		// core: String (color hex value or RGB value)
 		// name: String (opt, the name of the color)
-		function createShades(core) {
+		function _createShades(core) {
 			// Generates shades of colors with the lumiance values in the luminance map
 			var luminanceMap = {
 				10: 0.750200962650953,
@@ -341,35 +379,51 @@ _.WHITE = new _([255,255,255]);
 					luminance: color.luminance()
 				}
 				shades[i] = obj;
+				shades[i].color = chroma(obj.hex);
+
+				// Calculate contrast against black
+				if (i <= 50) {
+					shades[i].contrast = chroma.contrast(obj.hex, '#000');
+				}
+
+				// Calculate contrast against white (or take whichever contrast is lower on the 50 color)
+				if (i >= 50) {
+					shades[i].contrast = chroma.contrast(obj.hex, '#fff');
+					if (i == 50) {
+						shades[i].contrast <= chroma.contrast(obj.hex, '#fff') ? shades[i].contrast : chroma.contrast(obj.hex, '#fff');	
+					}
+				}
 			}
 
 			return shades;
 		}
 
-		function sortLuminance(arr, reverse) {
-			return arr.sort(function(a,b) {
-				return b.color.luminance - a.color.luminance;
-			})
+		function _passedContrast(arr, threshold) {
+			var passed = true;
+			for (key in arr) {
+				if (Math.round(arr[key].contrast, 1) < threshold) {
+					passed = false;
+					break;
+				}
+			}
+
+			return passed;
 		}
 
-		// Takes an array of objects
-		// {name: String, hex: String}
-		function createColors(arr) {
-			return arr.map(function(item) {
-				var color = new Color(item.hex);
-				item.color = color;
-				return item;
-			})
+		function setLeftBg(hex) {
+			vm.leftBgHex = hex;
 		}
 
-		function chromaCreate(arr) {
-			return arr.map(function(item) {
-				var color = chroma(item.hex);
-				item.color = color;
-				item.color.luminance = color.luminance();
-				return item;
-			})
+		function setRightBg(hex) {
+			vm.rightBgHex = hex;
 		}
 
+		function resetLeftBg() {
+			vm.leftBgHex = '#ffffff';
+		}
+
+		function resetRightBg() {
+			vm.rightBgHex = '#ffffff';
+		}
 	}
 })();

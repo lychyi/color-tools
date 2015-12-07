@@ -3,43 +3,47 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>Color Tools</title>
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic,300,300italic' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="app/css/site.css">
 	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
-	<div ng-app="colorApp" ng-controller="mainController as main" class="container">
-		<div class="row">
-			<div class="col-xs-12">
-				<h1>Illumina Colors</h1>
-				<div ng-repeat="(name, color) in main.colors.ilmn">
-					<div clipboard text="color.hex|uppercase">
-						<div color-block hex="color.hex" name="name" lum="color.luminance" ng-click="main.setShades(color.shades, name)" ng-class="{active: main.activeColor == name}"></div>
-					</div>
-				</div>
+	<div ng-app="colorApp" ng-controller="mainController as main" class="container-fluid app-container">
+		<div class="row title-row" style="border-bottom: 1px solid #eee">
+			<div class="col-xs-3">
+				<h4>Colors</h4>
+			</div>
+			<div class="col-xs-9">
+				<h4 ng-if="main.shades">Shades for {{main.activeColor}} ({{main.activeHex}}) <small>Contrast <i ng-show="main.passed" class="fa fa-check text-success"></i></small></h4>
 			</div>
 		</div>
-
-		<div ng-if="main.shades" class="row animate-fade">
-			<div class="col-xs-12">
-				<h1>Shades</h1>
-				<div ng-repeat="(name, color) in main.shades">
-					<div clipboard text="color.hex|uppercase">
-						<div color-block hex="color.hex" name="name" lum="color.luminance"></div>
-					</div>
+		<div class="row content-row">			
+			<div class="col-xs-3 side-bar" ng-style="{'background-color': main.leftBgHex}">
+				<div ng-repeat="(name, color) in main.colors.ilmn">
+					<div color-block hex="color.hex" name="name" lum="color.luminance" ng-click="main.setShades(color, name)" ng-class="{active: main.activeColor == name}" show-name="true" show-lum="true" show-hex="true" set-left-bg="main.setLeftBg(hex)" set-right-bg="main.setRightBg(hex)"></div>
 				</div>
+			</div>
+			<div ng-if="main.shades" class="col-xs-9 shades animate-fade" ng-style="{'background-color': main.rightBgHex}">
+				<div ng-repeat="(name, color) in main.shades">
+					<div color-block hex="color.hex" name="name" lum="color.luminance" contrast="color.contrast"  show-name="true" show-lum="true" show-hex="true" show-contrast="true" set-left-bg="main.setLeftBg(hex)" set-right-bg="main.setRightBg(hex)"></div>
+				</div>
+			</div>
+			<div ng-if="!main.shades" class="col-xs-9 shades" style="display: flex; align-items: center;">
+				<h3 style="color: #666;"><small><i class="fa fa-2x fa-lg fa-long-arrow-left"></i></small> Click on a color to show the various shades</h3>
 			</div>
 		</div>
 	</div>
 	<script src="app/js/color.js"></script>
 	<script src="node_modules/chroma-js/chroma.min.js"></script>
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="bower_components/angular/angular.js"></script>
 	<script src="bower_components/angular-animate/angular-animate.min.js"></script>
 	<script src="bower_components/angular-clipboard/angular-clipboard.js"></script>
-	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
+	
 	<!-- Angular App -->
 	<script src="dist/app.js"></script>
+
 </body>
 </html>
