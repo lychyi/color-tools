@@ -1,0 +1,113 @@
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+	color: #333;
+}
+
+.app-container {
+	height: 90vh;
+}
+
+.title-row {
+	height: 5vh;
+	overflow: hidden;
+}
+
+.content-row {
+	height: 95vh;
+}
+
+.side-bar {
+	height: 100%;
+	overflow-y: scroll;
+	border-right: 2px dotted #eee;
+	padding-top: 25px;
+}
+
+.shades {
+	height: 100%;
+	overflow-y: scroll;
+	padding-top: 25px;
+}
+
+.color-block {
+	height: 160px;
+	width: 240px;
+	float: left;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	background-color: gray;
+	position: relative;
+	padding: 10px 15px;
+}
+
+.color-block .toolbar {
+	position: absolute;
+	bottom: 5px;
+	font-size: 1.0em;
+	padding: 5px;
+}
+
+.color-block .toolbar .icon {
+	margin-right: 5px;
+}
+
+.color-selected {
+	position: absolute;
+	opacity: 0;
+	background: rgba(255,255,255,0.88);
+	border-radius: 100px;
+	padding: 7px;
+	bottom: 0px;
+	right: 8px;
+}
+
+.color-block.active .color-selected {
+	transition: 0.25s ease-in all;
+	opacity: 1;
+	bottom: 8px;
+}
+
+.color-block[ng-click] {
+	cursor: pointer;
+}
+
+[clipboard] {
+	cursor: pointer;
+}
+
+.color-label {
+
+}
+
+.black {
+	color: #000;
+}
+
+.white {
+	color: #fff;
+}
+
+.color-text {
+	background-color: rgba(255,255,255, 1);
+	padding: 5px;
+	font-size: 13px;
+	position: absolute;
+	bottom: 5px;
+	left: 5px;
+	color: #333;
+}
+
+// Angular Animation Classes
+/* The starting CSS styles for the enter animation */
+.animate-fade.ng-enter {
+    transition: 0.1s ease-in all;
+    opacity: 0;
+}
+
+/* The finishing CSS styles for the enter animation */
+.animate-fade.ng-enter.ng-enter-active {
+    opacity: 1;
+}

@@ -1,0 +1,41 @@
+{
+	"turquoise": {
+		"hex": "#44EDEA"
+	}, 
+	"portage": {
+		"hex": "#8196EF"
+	}, 
+	"studio": {
+		"hex": "#7648B8"
+	}, 
+	"burning orange": {
+		"hex": "#FF6D43"
+	}, 
+	"mustard": {
+		"hex": "#FFD355"
+	}, 
+	"medium red violet": {
+		"hex": "#BA3C93"
+	},
+	"sushi": {
+		"hex": "#81C04A"
+	},
+	"slate": {
+		"hex": "#607189"
+	},
+	"cardinal": {
+		"hex": "#CC2429"
+	},
+	"denim": {
+		"hex": "#1C5DD1"
+	},
+	"apple": {
+		"hex": "#2FB23E"
+	},
+	"pumpkin": {
+		"hex": "#F48931"
+	},
+	"blue": {
+		"hex": "#388FCF"
+	}
+}
