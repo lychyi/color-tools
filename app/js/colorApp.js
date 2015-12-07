@@ -3,7 +3,7 @@
 
 	var app = angular.module('colorApp');
 
-	app.constant('DATA_DIR', '../app/data/');
+	app.constant('DATA_DIR', 'http://lychyi.github.io/color-tools/app/data/');
 
 	app.config(config);
 
