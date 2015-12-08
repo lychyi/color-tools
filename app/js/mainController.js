@@ -37,7 +37,7 @@
 									'<span ng-click="setRightBg({hex:hex})" class="icon fa-stack fa-lg" style="font-size: 0.8em;" title="Set this color to right background.">' + 
 									  '<i class="fa fa-columns fa-stack-2x"></i>' + 
 									  '<i class="fa fa-long-arrow-right fa-stack-1x"></i>' + 
-									'</span>' + 
+									'</span>' +
 								'</div>'
 		};
 
@@ -83,13 +83,18 @@
 		vm.resetLeftBg = resetLeftBg;
 		vm.resetRightBg = resetRightBg;
 
+		vm.headerBg = "#ffffff";
+		vm.textColor = "#333333";
 		vm.leftBgHex = "#ffffff";
 		vm.rightBgHex = "#ffffff";
+
+		vm.contrastRatio;
 
 		activate();
 
 		function activate() {
 			colorFactory.get('ilmn-colors.json').then(function(data) {
+				console.log(data);
 				vm.colors.ilmn = data;
 				vm.colors.shades;
 
@@ -104,20 +109,16 @@
 
 					// Calculate shades
 					vm.colors.ilmn[key].shades = _createShades(vm.colors.ilmn[key].hex);
-
-					console.log(vm.colors.ilmn[key].shades);
 				}
 			});
 		}
 
 		function setShades(color, name) {
-			console.log(color);
 			vm.shades = color.shades;
 			vm.activeColor = name;
 			vm.activeHex = color.hex;
+			vm.textColor = color.hex;
 			vm.passed = _passedContrast(vm.shades, 4.5);
-
-			console.log('setting shades');
 		}
 
 		// core: String (color hex value or RGB value)
@@ -185,18 +186,26 @@
 
 		function setLeftBg(hex) {
 			vm.leftBgHex = hex;
+			calculateContrast();
 		}
 
 		function setRightBg(hex) {
 			vm.rightBgHex = hex;
+			calculateContrast();
 		}
 
 		function resetLeftBg() {
 			vm.leftBgHex = '#ffffff';
+			calculateContrast();
 		}
 
 		function resetRightBg() {
 			vm.rightBgHex = '#ffffff';
+			calculateContrast();
+		}
+
+		function calculateContrast() {
+			vm.contrastRatio = chroma.contrast(vm.rightBgHex, vm.leftBgHex);
 		}
 	}
 })();
