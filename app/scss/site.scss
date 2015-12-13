@@ -7,16 +7,36 @@ h1, h2, h3, h4, h5 {
 }
 
 .app-container {
-	height: 90vh;
+	height: 100vh;
 }
 
 .title-row {
-	height: 5vh;
+	height: 45px;
 	overflow: hidden;
 }
 
+.multi-hue-row {
+	height: 10vh;
+	overflow: hidden;
+}
+
+.multi-hue-row .color-scale {
+	display: flex;
+	padding: 0;
+	margin: 0;
+}
+
+.multi-hue-row .color-area {
+	flex-grow: 1;
+	height: 10vh;
+	padding: 0;
+	margin: 0;
+	float: left;
+	background-color: gray;
+}
+
 .content-row {
-	height: 95vh;
+	height: 90vh;
 }
 
 .side-bar {

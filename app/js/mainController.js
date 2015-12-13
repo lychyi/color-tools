@@ -18,7 +18,8 @@
 				showHex: "=", 
 				showLum: "=", 
 				showContrast: "=", 
-				setLeftBg: "&", 
+				setLeftBg: "&",
+				setMidBg: "&",  
 				setRightBg: "&"
 			}, 
 			transclude: true, 
@@ -33,6 +34,9 @@
 									'<span ng-click="setLeftBg({hex:hex})" class="icon fa-stack fa-lg" style="font-size: 0.8em;" title="Set this color to left background.">' + 
 									  '<i class="fa fa-columns fa-stack-2x"></i>' + 
 									  '<i class="fa fa-long-arrow-left fa-stack-1x"></i>' + 
+									'</span>' + 
+									'<span ng-click="setMidBg({hex:hex})" class="icon fa-stack fa-lg" style="font-size: 0.8em;" title="Set this color to middle hue.">' + 
+									  '<i class="fa fa-columns fa-stack-2x"></i>' +
 									'</span>' + 
 									'<span ng-click="setRightBg({hex:hex})" class="icon fa-stack fa-lg" style="font-size: 0.8em;" title="Set this color to right background.">' + 
 									  '<i class="fa fa-columns fa-stack-2x"></i>' + 
@@ -79,6 +83,7 @@
 		vm.setShades = setShades;
 		vm.shades;
 		vm.setLeftBg = setLeftBg;
+		vm.setMidBg = setMidBg;
 		vm.setRightBg = setRightBg;
 		vm.resetLeftBg = resetLeftBg;
 		vm.resetRightBg = resetRightBg;
@@ -86,6 +91,7 @@
 		vm.headerBg = "#ffffff";
 		vm.textColor = "#333333";
 		vm.leftBgHex = "#ffffff";
+		vm.midBgHex = "#ffffff";
 		vm.rightBgHex = "#ffffff";
 
 		vm.contrastRatio;
@@ -94,7 +100,6 @@
 
 		function activate() {
 			colorFactory.get('ilmn-colors.json').then(function(data) {
-				console.log(data);
 				vm.colors.ilmn = data;
 				vm.colors.shades;
 
@@ -141,15 +146,17 @@
 			var color = chroma(core);
 			
 			var hue = color.get('hsl.h');
+			var saturation = color.get('hsl.s');
 
 			var shades = {};
 
 			for(var i = 10; i <= 100; i+=10) {
 				var obj = {
-					hex: color.luminance(luminanceMap[i], 'hsl')
+					hex: color
+								.luminance(luminanceMap[i], 'hsl')
 								.set('hsl.h', hue)
 								.luminance(luminanceMap[i], 'hsl')
-								.hex(), 
+								.hex(),
 					luminance: color.luminance()
 				}
 				shades[i] = obj;
@@ -187,6 +194,10 @@
 		function setLeftBg(hex) {
 			vm.leftBgHex = hex;
 			calculateContrast();
+		}		
+
+		function setMidBg(hex) {
+			vm.midBgHex = hex;
 		}
 
 		function setRightBg(hex) {
@@ -207,5 +218,21 @@
 		function calculateContrast() {
 			vm.contrastRatio = chroma.contrast(vm.rightBgHex, vm.leftBgHex);
 		}
+
+		function _multiHue(num) {
+			var bez = chroma.bezier([vm.leftBgHex, vm.midBgHex, vm.rightBgHex]);
+			var norm = chroma.scale([vm.leftBgHex, vm.midBgHex, vm.rightBgHex]);
+
+			var scale = norm.mode('lab').correctLightness(true).colors(num);
+
+			console.log(scale);
+
+			return scale;
+		}
+
+		$scope.$watchGroup(['main.leftBgHex', 'main.midBgHex', 'main.rightBgHex'], function() {
+			vm.multiHueScale = _multiHue(9);
+		});
+
 	}
 })();

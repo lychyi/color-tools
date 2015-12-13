@@ -15,18 +15,23 @@
 				<h4 ng-style="{'color':main.textColor}">Colors <small class="animate-fade" style="float: right; cursor: pointer" ng-if='main.leftBgHex != "#ffffff"'><a ng-click="main.resetLeftBg()">Clear <i class="fa fa-minus-circle"></i></a></small></h4>
 			</div>
 			<div class="col-xs-9" ng-style="{'background-color':main.rightHeaderBgHex}">
-				<h4 ng-style="{'color':main.textColor}" ng-if="main.shades">Shades for {{main.activeColor}} ({{main.activeHex}}) <small> <span ng-if="main.contrastRatio" class="animate-fade">Contrast ratio for background colors: {{main.contrastRatio | number: 1 }}</span></small><small class="animate-fade" style="float: right; cursor: pointer;" ng-if='main.rightBgHex != "#ffffff"'><a ng-click="main.resetRightBg()">Clear <i class="fa fa-minus-circle"></i></a></small></h4>
+				<h4 ng-style="{'color':main.textColor}" ng-if="main.shades">Shades for {{main.activeColor}} ({{main.activeHex}}) <small> <span ng-show="main.contrastRatio" class="animate-fade">Contrast ratio for background colors: {{main.contrastRatio | number: 1 }}</span></small><small class="animate-fade" style="float: right; cursor: pointer;" ng-if='main.rightBgHex != "#ffffff"'><a ng-click="main.resetRightBg()">Clear <i class="fa fa-minus-circle"></i></a></small></h4>
+			</div>
+		</div>
+		<div class="multi-hue-row row">
+			<div class="col-xs-12 color-scale">
+				<div class="color-area" ng-repeat="hue in main.multiHueScale track by $index" ng-style="{'background-color': hue}"></div>
 			</div>
 		</div>
 		<div class="row content-row">			
 			<div class="col-xs-3 side-bar" ng-style="{'background-color': main.leftBgHex}">
 				<div ng-repeat="(name, color) in main.colors.ilmn">
-					<div color-block hex="color.hex" name="name" lum="color.luminance" ng-click="main.setShades(color, name)" ng-class="{active: main.activeColor == name}" show-name="true" show-lum="true" show-hex="true" set-left-bg="main.setLeftBg(hex)" set-right-bg="main.setRightBg(hex)"></div>
+					<div color-block hex="color.hex" name="name" lum="color.luminance" ng-click="main.setShades(color, name)" ng-class="{active: main.activeColor == name}" show-name="true" show-lum="true" show-hex="true" set-left-bg="main.setLeftBg(hex)" set-mid-bg="main.setMidBg(hex)" set-right-bg="main.setRightBg(hex)"></div>
 				</div>
 			</div>
 			<div ng-if="main.shades" class="col-xs-9 shades animate-fade" ng-style="{'background-color': main.rightBgHex}">
 				<div ng-repeat="(name, color) in main.shades">
-					<div color-block hex="color.hex" name="name" lum="color.luminance" contrast="color.contrast"  show-name="true" show-lum="true" show-hex="true" show-contrast="true" set-left-bg="main.setLeftBg(hex)" set-right-bg="main.setRightBg(hex)"></div>
+					<div color-block hex="color.hex" name="name" lum="color.luminance" contrast="color.contrast"  show-name="true" show-lum="true" show-hex="true" show-contrast="true" set-left-bg="main.setLeftBg(hex)" set-left-bg="main.setLeftBg(hex)" set-mid-bg="main.setMidBg(hex)" set-right-bg="main.setRightBg(hex)"></div>
 				</div>
 			</div>
 			<div ng-if="!main.shades" class="col-xs-9 shades" style="display: flex; align-items: center;">
