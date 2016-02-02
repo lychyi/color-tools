@@ -7,25 +7,48 @@ h1, h2, h3, h4, h5 {
 }
 
 .app-container {
-	height: 90vh;
+	height: 100vh;
 }
 
 .title-row {
-	height: 5vh;
+	height: 45px;
 	overflow: hidden;
 }
 
+.multi-hue-row {
+	height: 10vh;
+	overflow: hidden;
+}
+
+.multi-hue-row .color-scale {
+	display: flex;
+	padding: 0;
+	margin: 0;
+}
+
+.multi-hue-row .color-area {
+	flex-grow: 1;
+	height: 10vh;
+	padding: 0;
+	margin: 0;
+	float: left;
+	background-color: gray;
+}
+
 .content-row {
-	height: 95vh;
+	height: 90vh;
 }
 
 .side-bar {
 	height: 100%;
 	overflow-y: scroll;
-	border-right: 2px dotted #eee;
+	//border-right: 2px dotted #eee;
 	padding-top: 25px;
 }
 
+::-webkit-scrollbar {
+	display: none;
+}
 .shades {
 	height: 100%;
 	overflow-y: scroll;
@@ -110,4 +133,15 @@ h1, h2, h3, h4, h5 {
 /* The finishing CSS styles for the enter animation */
 .animate-fade.ng-enter.ng-enter-active {
     opacity: 1;
+}
+
+/* The starting CSS styles for the enter animation */
+.animate-fade.ng-leave {
+    transition: 0.1s ease-in all;
+    opacity: 1;
+}
+
+/* The finishing CSS styles for the enter animation */
+.animate-fade.ng-leave.ng-leave-active {
+    opacity: 0;
 }

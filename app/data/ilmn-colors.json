@@ -1,4 +1,19 @@
-{
+{	
+	"pumpkin": {
+		"hex": "#F48931"
+	},
+	"orange1": {
+		"hex": "#FEA340"
+	},
+	"orange2": {
+		"hex": "#FC8E3D"
+	},
+	"orange3": {
+		"hex": "#FE7F41"
+	},
+	"burning orange": {
+		"hex": "#FF6D43"
+	}, 
 	"turquoise": {
 		"hex": "#44EDEA"
 	}, 
@@ -7,9 +22,6 @@
 	}, 
 	"studio": {
 		"hex": "#7648B8"
-	}, 
-	"burning orange": {
-		"hex": "#FF6D43"
 	}, 
 	"mustard": {
 		"hex": "#FFD355"
@@ -31,9 +43,6 @@
 	},
 	"apple": {
 		"hex": "#2FB23E"
-	},
-	"pumpkin": {
-		"hex": "#F48931"
 	},
 	"blue": {
 		"hex": "#388FCF"
