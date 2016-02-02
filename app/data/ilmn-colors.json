@@ -15,36 +15,33 @@
 		"hex": "#FF6D43"
 	}, 
 	"turquoise": {
-		"hex": "#44EDEA"
+		"hex": "#14D4D1"
 	}, 
 	"portage": {
-		"hex": "#8196EF"
+		"hex": "#798FED"
 	}, 
 	"studio": {
-		"hex": "#7648B8"
+		"hex": "#6B43A5"
 	}, 
 	"mustard": {
-		"hex": "#FFD355"
+		"hex": "#F5B500"
 	}, 
 	"medium red violet": {
-		"hex": "#BA3C93"
+		"hex": "#C6429D"
 	},
 	"sushi": {
-		"hex": "#81C04A"
+		"hex": "#73B738"
 	},
 	"slate": {
-		"hex": "#607189"
+		"hex": "#67788E"
 	},
 	"cardinal": {
-		"hex": "#CC2429"
+		"hex": "#DE3439"
 	},
 	"denim": {
-		"hex": "#1C5DD1"
+		"hex": "#1551BD"
 	},
 	"apple": {
-		"hex": "#2FB23E"
-	},
-	"blue": {
-		"hex": "#388FCF"
+		"hex": "#2BA939"
 	}
 }
