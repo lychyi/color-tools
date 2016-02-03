@@ -20,6 +20,12 @@
 	"slate": {
 		"hex": "#67788E"
 	},
+	"ibmwarmgrey": {
+		"hex": "#B8AEAE"
+	},
+	"hiseqgrey": {
+		"hex": "#2A2829"
+	},
 	"cardinal": {
 		"hex": "#DE3439"
 	},
