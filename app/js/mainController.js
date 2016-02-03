@@ -143,6 +143,16 @@
 				//100: 0.000608268075032
 			};
 
+			// Exceptions, mustard can only have 10 through 30 color otherwise it gets
+			// all muddy.
+			if (core == '#F5B500') {
+				luminanceMap = {
+					10: 0.750200962650953,
+					20: 0.523519337589966,
+					30: 0.378252376695115
+				};
+			}
+			
 			var color = chroma(core);
 			
 			var hue = color.get('hsl.h');
@@ -150,15 +160,25 @@
 
 			var shades = {};
 
-			for(var i = 10; i < 100; i+=10) {
+			angular.forEach(luminanceMap, function (lum, i) {
 				var obj = {
 					hex: color
-								.luminance(luminanceMap[i], 'hsl')
+								.luminance(lum, 'hsl')
 								.set('hsl.h', hue)
-								.luminance(luminanceMap[i], 'hsl')
+								.luminance(lum, 'hsl')
 								.hex(),
 					luminance: color.luminance()
+				};
+
+				// Exception, replace Portage 60 with Denim 60 #0f50C5
+				if (core == '#798FED' && i == 60) {
+					obj = {
+						hex: '#0f50C5',
+						luminance: color.luminance()
+					};
 				}
+					
+
 				shades[i] = obj;
 				shades[i].color = chroma(obj.hex);
 
@@ -174,7 +194,7 @@
 						shades[i].contrast <= chroma.contrast(obj.hex, '#fff') ? shades[i].contrast : chroma.contrast(obj.hex, '#fff');	
 					}
 				}
-			}
+			});
 
 			return shades;
 		}

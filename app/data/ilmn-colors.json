@@ -14,23 +14,14 @@
 	"medium red violet": {
 		"hex": "#C6429D"
 	},
-	"sushi": {
-		"hex": "#73B738"
-	},
 	"slate": {
 		"hex": "#67788E"
 	},
-	"ibmwarmgrey": {
-		"hex": "#B8AEAE"
-	},
 	"hiseqgrey": {
-		"hex": "#2A2829"
+		"hex": "#4E434A"
 	},
 	"cardinal": {
 		"hex": "#DE3439"
-	},
-	"denim": {
-		"hex": "#1551BD"
 	},
 	"apple": {
 		"hex": "#2BA939"
