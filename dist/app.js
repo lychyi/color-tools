@@ -191,7 +191,7 @@ _.WHITE = new _([255,255,255]);
 
 	var app = angular.module('colorApp');
 
-	app.constant('DATA_DIR', 'http://lychyi.github.io/color-tools/app/data/');
+	app.constant('DATA_DIR', 'https://lychyi.github.io/color-tools/app/data/');
 	// app.constant('DATA_DIR', 'app/data/');
 
 	app.config(config);
@@ -294,7 +294,8 @@ _.WHITE = new _([255,255,255]);
 	function mainController($scope, colorFactory) {
 		var vm = this;
 
-		var luminanceMap = {
+		vm.luminanceMap = {
+				5: 0.8784000000000001,
 				10: 0.750200962650953,
 				20: 0.523519337589966,
 				30: 0.378252376695115,
@@ -304,7 +305,7 @@ _.WHITE = new _([255,255,255]);
 				70: 0.061541559224324,
 				80: 0.033805835121627,
 				90: 0.020023471550597,
-				100: 0.000608268075032
+				//100: 0.000608268075032
 			};
 
 		vm.colors = [];
@@ -357,29 +358,7 @@ _.WHITE = new _([255,255,255]);
 		// core: String (color hex value or RGB value)
 		// name: String (opt, the name of the color)
 		function _createShades(core) {
-			// Generates shades of colors with the lumiance values in the luminance map
-			var luminanceMap = {
-				10: 0.750200962650953,
-				20: 0.523519337589966,
-				30: 0.378252376695115,
-				40: 0.294571586112391,
-				50: 0.182744645346758,
-				60: 0.098909147989603,
-				70: 0.061541559224324,
-				80: 0.033805835121627,
-				90: 0.020023471550597
-				//100: 0.000608268075032
-			};
-
-			// Exceptions, mustard can only have 10 through 30 color otherwise it gets
-			// all muddy.
-			if (core == '#F5B500') {
-				luminanceMap = {
-					10: 0.750200962650953,
-					20: 0.523519337589966,
-					30: 0.378252376695115
-				};
-			}
+			var lumMap = Object.assign({}, vm.luminanceMap);
 			
 			var color = chroma(core);
 			
@@ -388,7 +367,7 @@ _.WHITE = new _([255,255,255]);
 
 			var shades = {};
 
-			angular.forEach(luminanceMap, function (lum, i) {
+			angular.forEach(lumMap, function (lum, i) {
 				var obj = {
 					hex: color
 								.luminance(lum, 'hsl')
@@ -399,12 +378,12 @@ _.WHITE = new _([255,255,255]);
 				};
 
 				// Exception, replace Portage 60 with Denim 60 #0f50C5
-				if (core == '#798FED' && i == 60) {
-					obj = {
-						hex: '#0f50C5',
-						luminance: color.luminance()
-					};
-				}
+				// if (core == '#798FED' && i == 60) {
+				// 	obj = {
+				// 		hex: '#0f50C5',
+				// 		luminance: color.luminance()
+				// 	};
+				// }
 					
 
 				shades[i] = obj;
